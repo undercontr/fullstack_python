@@ -1,0 +1,16 @@
+Dear {{ form.name_surname.data }},
+
+We got your quotation request. Our team will be replied to you as soon as possible. Your details are below:
+
+Name-Surname: {{ form.name_surname.data }}
+Email: {{ form.email.data }}
+Company: {{ form.company.data }}
+Country: {{ form.country.data }}
+Phone: {{ form.phone.data }}
+
+
+Product Name: {{ form.product_name.data }}
+Product Packing Code: {{ form.product_sku.data }}
+Quantity: {{ form.qty.data }}
+
+Message: {{ form.message.data }}

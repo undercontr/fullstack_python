@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="{% if g.lang_code == 'tr' %}tr{% elif g.lang_code == "en" %}en{% endif %}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for("static", filename="bootstrap/css/bootstrap.min.css") }}">
+    <link rel="stylesheet" href="{{ url_for("static", filename="style.css") }}">
+    <link rel="stylesheet" href="{{ url_for("static", filename="fontawesome/css/fontawesome.min.css") }}">
+    <link rel="stylesheet" href="{{ url_for("static", filename="fontawesome/css/solid.min.css") }}">
+    <link rel="stylesheet" href="{{ url_for("static", filename="inttelinput/build/css/intlTelInput.css") }}">
+    {% block extra_link %}{% endblock %}
+</head>
+<body>
+<div class="bg-dark">
+    <div class="container">
+        <div class="row">
+            <div class="col"><span
+                    class="small text-white font-weight-bold text-left">Scharlau Distribution of Turkey</span></div>
+            <div class="col">
+                <span class="small text-white font-weight-bold float-right"><a href="{{ url_for("web.contact") }}">Contact Us</a>
+                <span> | </span>
+                <span>export@analitikkimya.com.tr | info@analitikkimya.com.tr</span></span>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row w-100 my-3">
+        <div class="col-md-3 mb-sm-3">
+            <a href="{{ url_for("web.index") }}"><img src="{{ url_for("static", filename="images/logo.png") }}"
+                                                      alt="Scharlau Turkey"></a>
+        </div>
+        <div class="col-md-9 align-self-center float-right">
+            <form autocomplete="off">
+                <input type="hidden" name="csrf_token" id="csrf_token" value="{{ csrf_token() }}">
+                <div class="shadow-lg">
+                    <div class="input-group">
+                        <input name="searchbox" id="searchbox" type="text" style="font-size: 24px"
+                               class="rounded-0 h-auto form-control input-outline " placeholder="{{ random_product }}"
+                               aria-label="Search for product"
+                               aria-describedby="basic-addon1">
+                        <div class="input-group-append">
+                            <span class="input-group-text rounded-0" id="basic-addon1"><i
+                                    class="fas fa-search"></i></span>
+                        </div>
+                    </div>
+            </form>
+            <div id="search-results" style="width: 91.5%; z-index: 11;"
+                 class="border border-secondary position-absolute bg-white">
+            </div>
+        </div>
+        <span id="search-field-bottom-text" class=" m-0 p-0">Search for products by CAS Number or chemical name</span>
+    </div>
+
+</div>
+<div class="bg-secondary container rounded py-1 shadow">
+    <nav class="nav nav-pills flex-column flex-sm-row">
+        <a class="my-2 font-weight-bold flex-sm-fill rounded text-sm-center nav-link head-menu text-white {% if "chemicals" in request.endpoint %}active{% endif %}"
+           href="{{ url_for("web.chemicals") }}">Chemicals</a>
+        <a class="my-2 font-weight-bold flex-sm-fill rounded text-sm-center nav-link head-menu text-white {% if "pharma" in request.endpoint %}active{% endif %}"
+           href="{{ url_for("web.pharma") }}">Pharma</a>
+        <a class="my-2 font-weight-bold flex-sm-fill rounded text-sm-center nav-link head-menu text-white {% if "cosmetics" in request.endpoint %}active{% endif %}"
+           href="{{ url_for("web.cosmetics") }}">Cosmetics</a>
+        <a class="my-2 font-weight-bold flex-sm-fill rounded text-sm-center nav-link head-menu text-white {% if "microbiology" in request.endpoint %}active{% endif %}"
+           href="{{ url_for("web.microbiology") }}">Microbiology</a>
+        {#        <a class="my-2 font-weight-bold flex-sm-fill rounded text-sm-center nav-link {% if "documentation" in request.endpoint %}active{% endif %}"#}
+        {#           href="{{ url_for("web.documentation") }}">Documentation</a>#}
+        <a class="my-2 font-weight-bold flex-sm-fill rounded text-sm-center nav-link head-menu text-white {% if "contact" in request.endpoint %}active{% endif %}"
+           href="{{ url_for("web.contact") }}">Contact</a>
+    </nav>
+</div>
+{% block body %}{% endblock %}
+<footer class="page-footer font-small pt-4 bg-dark text-white rounded-top">
+    <div class="container text-center text-md-left">
+        <div class="row">
+            <div class="col-md-6 mt-md-0 mt-3">
+                <h5 class="text-uppercase">{{ _('About us') }}</h5>
+                <p>{{ _('Distribution of Scharlau products from a trade company in Turkey') }}</p>
+
+            </div>
+            <hr class="clearfix w-100 d-md-none pb-3">
+            <div class="col-md-3 mb-md-0 mb-3">
+                <h5 class="text-uppercase">{{ _('Menu') }}</h5>
+
+                <ul class="list-unstyled">
+                    <li>
+                        <a href="{{ url_for('web.chemicals') }}">{{ _('Chemicals') }}</a>
+                    </li>
+                    <li>
+                        <a href="{{ url_for('web.microbiology') }}">{{ _('Microbiology') }}</a>
+                    </li>
+                    <li>
+                        <a href="{{ url_for('web.documentation') }}">{{ _('Documentation') }}</a>
+                    </li>
+                    <li>
+                        <a href="{{ url_for('web.contact') }}">{{ _('Contact') }}</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-3 mb-md-0 mb-3">
+                <h5 class="text-uppercase">{{ _('Info') }}</h5>
+                <ul class="list-unstyled">
+                    <li>
+                        <p class="small">
+                            <b>{{ _('Address:') }}</b><span> {{ _('ISTOC 21. Ada No:39-41-43-45 Mahmutbey Bagcilar Istanbul TURKEY') }}</span>
+                        </p>
+                    </li>
+                    <li>
+                        <p class="small"><b>{{ _('Phone:') }}</b><span> {{ _('+90 212 659 98 70') }}</span></p>
+                    </li>
+                    <li>
+                        <p class="small"><b>{{ _('Fax:') }}</b><span> {{ _('+90 212 659 53 48') }}</span></p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="footer-copyright text-center py-3">{{ _('Analitik Kimya ve Lab. Cih. San. Tic. Ltd. Sti.') }}
+        <br>{{ now.year }}
+    </div>
+</footer>
+<script type="text/javascript">
+    window.product_url = "{{ url_for("web.product", url="") }}"
+    window.search_url = "{{ url_for("web.search") }}"
+</script>
+
+<script src="{{ url_for("static", filename="assets/js/jquery-3.5.1.min.js") }}"></script>
+<script src="{{ url_for("static", filename="assets/js/popper.min.js") }}"></script>
+<script src="{{ url_for("static", filename="bootstrap/js/bootstrap.min.js") }}"></script>
+<script src="{{ url_for("static", filename="assets/js/pdfobject.min.js") }}"></script>
+{% block before_appjs %}{% endblock %}
+<script src="{{ url_for("static", filename="assets/js/app.js") }}"></script>
+{% block after_appjs %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,87 @@
+{% extends '_layout.jinja2' %}
+{% block extra_link %}
+        <link rel="stylesheet"
+              href="{{ url_for("static", filename="bootstrap-select/dist/css/bootstrap-select.min.css") }}">
+    {% endblock %}
+{% block body %}
+    <div class="modal fade" id="mail-modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="modal-title" class="modal-title font-weight-bold"></h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>A copy of your request sent to your email. You can continue to browse the website. Click <span
+                            class="font-weight-bold">'Close'</span> to
+                        close this screen.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br>
+        <div class="dropdown-divider ml-auto mr-auto"></div>
+        <h1>Scharlau Turkey</h1>
+
+        <p><span
+                class="font-weight-bold">{{ _('Adres:') }}&nbsp;</span><span>{{ _('ISTOC 21. Ada No:39-41-43-45 Mahmutbey Mah. Bagcilar Istanbul / TURKEY') }}</span>
+        </p>
+        <p><span class="font-weight-bold">{{ _('Tel:') }}&nbsp;</span><span>{{ _('+90 212 659 98 70') }}</span></p>
+        <p><span class="font-weight-bold">{{ _('Faks:') }}&nbsp;</span><span>{{ _('+90 212 659 53 48') }}</span></p>
+        <div class="dropdown-divider container ml-auto mr-auto"></div>
+        {#    <script type='text/javascript'#}
+        {#            src='https://embedmaps.com/google-maps-authorization/script.js?id=780d81800fd0a4f3ff60b0371e44ae7d0e1f4c6e'></script>#}
+        <form class="mb-4" id="contact-form">
+
+            {{ form.csrf_token }}
+
+            <div class="form-group">
+                {{ form.email.label }}
+                {{ form.email(class_='form-control input-outline bg-light') }}
+            </div>
+            <div class="form-group">
+                {{ form.company.label }}
+                {{ form.company(class_='form-control input-outline bg-light') }}
+            </div>
+            <div class="form-group">
+                {{ form.country.label }}
+                {{ form.country(class_='form-control show-tick border input-outline selectpicker', data_live_search="true", data_header="Select your country:") }}
+            </div>
+            <div class="form-group">
+                {{ form.name_surname.label }}
+                {{ form.name_surname(class_='form-control input-outline bg-light') }}
+            </div>
+            <div class="form-group">
+                {{ form.phone.label }}
+                {{ form.phone(class_='form-control input-outline bg-light') }}
+            </div>
+            <div class="form-group">
+                {{ form.message.label }}
+                {{ form.message(class_='form-control input-outline bg-light') }}
+            </div>
+            {{ form.recaptcha }}
+            {{ form.submit(class_='btn btn-primary mt-3', rows='3') }}
+            <i id="loading-spinner" class="m-3 fas fa-spinner text-info load-rotate"></i>
+        </form>
+    {% block before_appjs %}
+        <script src="{{ url_for("static", filename="inttelinput/build/js/intlTelInput.js") }}"></script>
+        <script>
+
+            window.intlTelInput(document.querySelector("#phone"), {
+                autoPlaceholder: "polite",
+                utilsScript: "{{ url_for("static", filename="inttelinput/build/js/utils.js") }}"
+            });
+
+            window.contact_url = "{{ url_for("web.contact") }}";
+        </script>
+    {% endblock %}
+    {% block after_appjs %}
+        <script src="{{ url_for("static", filename="bootstrap-select/dist/js/bootstrap-select.min.js") }}"></script>
+    {% endblock %}
+{% endblock %}

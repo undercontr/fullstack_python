@@ -1,0 +1,11 @@
+Dear {{ form.name_surname.data }},
+
+We got your contact request. Our team will be replied to you as soon as possible. Your details are below:
+
+Name-Surname: {{ form.name_surname.data }}
+Email: {{ form.email.data }}
+Company: {{ form.company.data }}
+Country: {{ form.country.data }}
+Phone: {{ form.phone.data }}
+
+Your message: {{ form.message.data }}

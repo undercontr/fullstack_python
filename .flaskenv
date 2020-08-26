@@ -1,0 +1,8 @@
+FLASK_APP=run.py
+MAIL_SERVER=smtp.googlemail.com
+MAIL_PORT=465
+MAIL_USE_TLS=0
+MAIL_USE_SSL=1
+MAIL_USERNAME=webmaster@analitikkimya.com.tr
+MAIL_PASSWORD=Anw6318A.
+MAIL_DEBUG=1

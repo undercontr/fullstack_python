@@ -1,0 +1,33 @@
+{% extends "_layout.jinja2" %}
+
+{% block body %}
+    <div class="my-5">
+        <h5>Use below form to search for MSDS or TDS of the products</h5>
+        <i>Model number must be entered in the form to get documentation.</i>
+    </div>
+    <div class="row">
+        <div class="col-md-4 input-group flex-nowrap mb-5">
+            <input id="docbox" type="text" class="form-control input-outline" placeholder="Type model number here"
+                   aria-label="Username"
+                   aria-describedby="addon-wrapping">
+            <div class="input-group-append">
+                <span class="input-group-text" id="addon-wrapping"><i class="fas fa-file-pdf"></i></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="list-group mb-3" id="docresults">
+
+    </div>
+
+{% endblock %}
+
+    {% block before_appjs %}
+        <script>
+
+            window.static_url =
+            {{ url_for("static", filename="") }}
+
+        </script>
+
+    {% endblock %}

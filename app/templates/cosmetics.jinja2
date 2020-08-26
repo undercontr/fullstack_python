@@ -1,0 +1,83 @@
+{% extends '_layout.jinja2' %}
+{% block body %}
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="bg-dark rounded page-head-cosmetics my-3 px-5 py-5 shadow">
+                <h3 class="text-uppercase text-white">{{ _('Cosmetics') }}</h3>
+
+                {% if page == 1 %}
+                {% elif page > 1 %}
+                    <a href="{{ url_for('web.cosmetics', page=prev_page, letter=letter) }}"
+                       class="btn font-weight-bold btn-primary ml-auto ml-1 h-100">{{ _('Previous Page') }}</a>
+                {% endif %}
+                {% if products_count < limit %}
+                {% elif products_count == limit %}
+                    <a href="{{ url_for('web.cosmetics', page=next_page, letter=letter) }}"
+                       class="btn font-weight-bold btn-primary {% if page == 1 or page < 1 %} ml-auto {% endif %} ml-1 h-100">{{ _('Next Page') }}</a>
+                {% endif %}
+            </div>
+
+            <div class="my-4">
+                <div class="btn-group btn-group-sm d-flex flex-wrap" role="group" aria-label="...">
+                    {% for letter1 in letters %}
+                        <a href="{{ url_for("web.cosmetics", letter=letter1) }}" type="button"
+                           class="btn btn-outline-dark">{{ letter1 }}</a>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="row row-cols-xs-1 row-cols-sm-1 row-cols-md-3">
+                {% for product in products %}
+                    <div class="col mb-4">
+                        <div class="card h-100 shadow">
+                            {#                                <img src="{{ urun.resim }}" class="card-img-top w-100 align-self-center"#}
+                            {#                                     alt="{{ urun.urun_isim }}">#}
+                            {#                                {% if not "/static/placeholder/" in urun.resim %}#}
+                            {#                                    <img src="{{ urun.uretici.uretici_resim }}" alt=""#}
+                            {#                                         class="w-25 m-4 position-absolute right-0">#}
+                            {#                                {% else %}#}
+                            {#                                {% endif %}#}
+                            <div class="card-body">
+                                <h5 class="card-title">{{ product.name }}</h5>
+                                {% if product.description %}
+                                    <p class="card-text small">{{ product.description }}</p>
+                                {% else %}
+                                {% endif %}
+                            </div>
+                            <div class="card-footer">
+                                <span class="small"><span
+                                        class="font-weight-bold">{{ _('Product Code:') }}</span> {{ product.model }}</span><br>
+                                <span class="small"><span
+                                        class="font-weight-bold">{{ _('Category:') }}</span> {{ product.category.category.name }} > {{ product.category.name }}</span><br>
+                                <span class="small"><span
+                                        class="font-weight-bold">{{ _('CAS Number:') }}</span>
+                                    {% if product.cas_number %}
+                                        {{ product.cas_number }}{% else %}Not Available{% endif %}</span><br>
+                            </div>
+                            <a href="{{ url_for('web.product', url=product.url) }}"
+                               class="btn btn-dark btn-sm"
+                               style="border-radius: 0 0 3px 3px">{{ _('Product Page') }}</a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            {% if products_count == 0 %}
+            {% elif products_count > 0 %}
+                <div class="align-items-center mb-3">
+
+                    {% if page == 1 %}
+                    {% elif page > 1 %}
+                        <a href="{{ url_for('web.cosmetics', page=prev_page, letter=letter) }}"
+                           class="btn font-weight-bold btn-primary ml-auto ml-1 h-100">{{ _('Previous Page') }}</a>
+                    {% endif %}
+                    {% if products_count < limit %}
+                    {% elif products_count == limit %}
+                        <a href="{{ url_for('web.cosmetics', page=next_page, letter=letter) }}"
+                           class="btn font-weight-bold btn-primary {% if page == 1 or page < 1 %} ml-auto {% endif %} ml-1 h-100">{{ _('Next Page') }}</a>
+                    {% endif %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,240 @@
+{% extends "_layout.jinja2" %}
+{% block extra_link %}
+    <link rel="stylesheet"
+          href="{{ url_for("static", filename="bootstrap-select/dist/css/bootstrap-select.min.css") }}">
+{% endblock %}
+{% block body %}
+    <div class="modal fade" id="mail-modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="modal-title" class="modal-title font-weight-bold"></h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>A copy of your request sent to your email. You can continue to browse the website. Click <span
+                            class="font-weight-bold">'Close'</span> to
+                        close this screen.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row my-4 mr-0">
+        <div class="col-md-4">
+            {% if product.packing|length == 1 %}
+            {% for img in product.packing %}
+                {% if "scharlau" in img.image %}
+                {% else %}
+                        <img class="d-block w-100 rounded" src="{{ url_for("static", filename="images/" + img.image) }}" alt="{{ img.sku }}">
+                {% endif %}
+            {% endfor %}
+            {% elif product.packing|length > 1 %}
+            <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner">
+
+                    {% for img in product.packing %}
+                        {% if "scharlau" in img.image %}
+                        {% else %}
+                            <div class="carousel-item">
+                                <img class="d-block w-100" src="{{ url_for("static", filename="images/" + img.image) }}"
+                                     alt="{{ img.sku }}">
+                                <div class="carousel-caption m-0 p-0 d-none d-md-block">
+                                    <div class="bg-secondary rounded-pill">
+                                        <h3 class="font-weight-bold">{{ img.sku }}</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+        {% endif %}
+            {#            <img src="{{ url_for("static", filename="images") }}/{{ image }}" alt="" class="w-100 border rounded">#}
+        </div>
+        <div class="col-md-8 bg-light border rounded p-3">
+            <h1 class="d-inline">{{ product.name }}</h1>
+            <div class="mt-4">
+                <p class="font-weight-bold">{{ _('Model:') }}<span
+                        class="font-weight-normal"> {{ product.model }}</span></p>
+                <p class="font-weight-bold">{{ _('Category:') }}<span
+                        class="font-weight-normal"> {{ product.category.name }}</span></p>
+                <p class="font-weight-bold">Base Name:<span
+                        class="font-weight-normal"> {{ product.chemical_name }}</span></p>
+                <p class="font-weight-bold">CAS Number:<span
+                        class="font-weight-normal">
+                    {% if product.cas_number %}
+                        {{ product.cas_number.replace("_", "-") }}
+                    {% else %}
+                        Not Available
+                    {% endif %}
+                </span></p>
+            </div>
+            {% for info in product.packing %}
+                <div class="d-inline-block">
+                <span class="badge badge-warning font-weight-bold"
+                      style="border-bottom-right-radius: 0; border-top-right-radius: 0">{{ info.packing_value.name }}</span><span
+                        class="badge badge-secondary"
+                        style="border-bottom-left-radius: 0; border-top-left-radius: 0">{{ info.sku }}</span></div>
+            {% endfor %}
+
+        </div>
+    </div>
+
+    <div class="my-5">
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <a class="nav-link font-weight-bold text-secondary" id="quotation_tab" data-toggle="tab"
+                   href="#quotation"
+                   role="tab"
+                   aria-controls="quotation" aria-selected="false">Ask for Quotation</a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link text-dark font-weight-bold active" id="specifications_tab" data-toggle="tab"
+                   href="#specification" role="tab" aria-controls="home"
+                   aria-selected="true">Specifications</a>
+            </li>
+            {% if product.msds %}
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link font-weight-bold text-dark" id="msds_tab" data-toggle="tab"
+                       href="#msds"
+                       role="tab"
+                       aria-controls="msds" aria-selected="false">MSDS <i class="fas fa-file-pdf"></i></a>
+                </li>
+            {% else %}
+            {% endif %}
+            {% if product.tds %}
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link font-weight-bold text-dark" id="tds_tab" data-toggle="tab"
+                       href="#tds"
+                       role="tab"
+                       aria-controls="tds" aria-selected="false">TDS <i class="fas fa-file-pdf"></i></a>
+                </li>
+            {% else %}
+            {% endif %}
+        </ul>
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="specification" role="tabpanel"
+                 aria-labelledby="specifications_tab">
+
+                <table class="table table-striped ">
+                    <thead>
+                    <tr>
+                        <th scope="col">Specification</th>
+                        <th scope="col">Value</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for spec in product.specification %}
+                        <tr>
+                            <td>{{ spec.spec_def.name }}</td>
+                            <td>{{ spec.value }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% if product.msds %}
+                <div class="tab-pane fade" id="msds" role="tabpanel" aria-labelledby="msds_tab">
+                    <div id="msds-embed"></div>
+                </div>
+            {% else %}
+            {% endif %}
+            {% if product.tds %}
+                <div class="tab-pane fade" id="tds" role="tabpanel" aria-labelledby="tds_tab">
+                <div id="tds-embed"></div>
+            {% else %}
+            {% endif %}
+            </div>
+            <div class="tab-pane fade" id="quotation" role="tabpanel" aria-labelledby="quotation_tab">
+
+                <form id="quotation-form" class="form-row mt-3">
+                    {{ form.csrf_token }}
+
+                    <div class="form-group col-md-6">
+                        {{ form.name_surname.label }}
+                        {{ form.name_surname(class_="form-control input-outline bg-light") }}
+                    </div>
+                    <div class="form-group col-md-6">
+                        {{ form.email.label }}
+                        {{ form.email(class_="form-control input-outline bg-light") }}
+                    </div>
+                    <div class="form-group col-md-4">
+                        {{ form.company.label }}
+                        {{ form.company(class_="form-control input-outline bg-light") }}
+                    </div>
+                    <div class="form-group col-md-4">
+                        {{ form.country.label }}
+                        {{ form.country(class_="form-control input-outline selectpicker show-tick border", data_live_search="true", data_header="Select your country:") }}
+
+                    </div>
+                    <div class="form-group col-md-4">
+                        {{ form.phone.label }}
+                        {{ form.phone(class_="form-control input-outline bg-light") }}
+                    </div>
+                    <div class="form-group col-md-9">
+                        {{ form.product_name.label }}
+                        {{ form.product_name(class_="text-muted form-control input-outline", value=product.name, readonly="") }}
+                    </div>
+                    <div class="form-group col-md-3">
+                        {{ form.product_sku.label }}
+                        {{ form.product_sku(class_="form-control input-outline bg-light selectpicker") }}
+                    </div>
+                    <div class="form-group col-md-12">
+                        {{ form.qty.label }}
+                        {{ form.qty(class_="form-control input-outline bg-light") }}
+                    </div>
+                    <div class="form-group col-md-12">
+                        {{ form.message.label }}
+                        {{ form.message(class_="form-control input-outline bg-light") }}
+                    </div>
+                    <div class="form-group">
+                        {{ form.recaptcha }}
+                        {{ form.submit(class_="btn btn-primary mt-3", rows="3") }}
+                        <i id="loading-spinner" class="m-3 fas fa-spinner text-info load-rotate"></i>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block before_appjs %}
+    <script src="{{ url_for("static", filename="inttelinput/build/js/intlTelInput.js") }}"></script>
+    <script>
+
+        $(".carousel-item").first().addClass("active")
+
+        window.intlTelInput(document.querySelector("#phone"), {
+            autoPlaceholder: "polite",
+            utilsScript: "{{ url_for("static", filename="inttelinput/build/js/utils.js") }}"
+        });
+
+        window.quotation_url = "{{ url_for("web.product", url=product.url) }}";
+
+        window.msds_url = "{{ url_for("static", filename="msds") }}/{{ product.msds }}"
+        window.tds_url = "{{ url_for("static", filename="tds") }}/{{ product.tds }}"
+
+        PDFObject.embed(window.msds_url, "#msds-embed");
+        PDFObject.embed(window.tds_url, "#tds-embed");
+
+    </script>
+{% endblock %}
+{% block after_appjs %}
+    <script src="{{ url_for("static", filename="bootstrap-select/dist/js/bootstrap-select.min.js") }}"></script>
+{% endblock %}

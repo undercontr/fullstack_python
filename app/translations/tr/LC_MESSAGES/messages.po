@@ -1,0 +1,125 @@
+# Turkish translations for PROJECT.
+# Copyright (C) 2020 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2020.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2020-06-16 00:06+0300\n"
+"PO-Revision-Date: 2020-06-16 00:06+0300\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: tr\n"
+"Language-Team: tr <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.8.0\n"
+
+#: app/forms/contact.py:9 app/forms/quotation.py:10
+msgid "Email"
+msgstr ""
+
+#: app/forms/contact.py:10 app/forms/quotation.py:11
+msgid "Company Name"
+msgstr ""
+
+#: app/forms/contact.py:11 app/forms/quotation.py:13
+msgid "Name-Surname"
+msgstr ""
+
+#: app/forms/contact.py:12 app/forms/quotation.py:12
+msgid "Phone Number"
+msgstr ""
+
+#: app/forms/contact.py:13
+msgid "Your Message"
+msgstr ""
+
+#: app/forms/contact.py:15
+msgid "Submit"
+msgstr ""
+
+#: app/forms/quotation.py:14
+msgid "Quotation Details"
+msgstr ""
+
+#: app/forms/quotation.py:16
+msgid "Product Packing"
+msgstr ""
+
+#: app/forms/quotation.py:17
+msgid "Quantity you need to get quoted for"
+msgstr ""
+
+#: app/forms/quotation.py:19
+msgid "Submit Quotation Request"
+msgstr ""
+
+#: app/templates/chemicals.jinja2:7
+msgid "Chemical Products"
+msgstr ""
+
+#: app/templates/chemicals.jinja2:12 app/templates/microbiology.jinja2:12
+msgid "Previous Page"
+msgstr ""
+
+#: app/templates/chemicals.jinja2:17 app/templates/microbiology.jinja2:17
+msgid "Next Page"
+msgstr ""
+
+#: app/templates/chemicals.jinja2:37 app/templates/microbiology.jinja2:37
+msgid "Product Code:"
+msgstr ""
+
+#: app/templates/chemicals.jinja2:39 app/templates/microbiology.jinja2:39
+#: app/templates/product.jinja2:35
+msgid "Category:"
+msgstr ""
+
+#: app/templates/chemicals.jinja2:41 app/templates/microbiology.jinja2:41
+msgid "CAS Number:"
+msgstr ""
+
+#: app/templates/chemicals.jinja2:45 app/templates/microbiology.jinja2:45
+msgid "Product Page"
+msgstr ""
+
+#: app/templates/contact.jinja2:19
+msgid "Adres:"
+msgstr ""
+
+#: app/templates/contact.jinja2:19
+msgid "ISTOC 12. Ada No:39-41-43-45 Mahmutbey Mah. Bagcilar Istanbul / TURKEY"
+msgstr ""
+
+#: app/templates/contact.jinja2:21
+msgid "Tel:"
+msgstr ""
+
+#: app/templates/contact.jinja2:21
+msgid "+90 212 526 52 15"
+msgstr ""
+
+#: app/templates/contact.jinja2:22
+msgid "Faks:"
+msgstr ""
+
+#: app/templates/contact.jinja2:22
+msgid "+90 212 527 45 69"
+msgstr ""
+
+#: app/templates/microbiology.jinja2:7
+msgid "Microbiology"
+msgstr ""
+
+#: app/templates/product.jinja2:33
+msgid "Model:"
+msgstr ""
+
+#: app/web/routes.py:46
+msgid "Scharlau Turkey"
+msgstr ""
+
